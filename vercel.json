@@ -1,32 +1,8 @@
 {
   "version": 2,
   "functions": {
-    "api/webhook.js": {
-      "runtime": "nodejs18.x"
+    "api/**/*.js": {
+      "runtime": "nodejs20.x"
     }
-  },
-  "routes": [
-    {
-      "src": "/api/webhook",
-      "dest": "/api/webhook.js"
-    },
-    {
-      "src": "/webhook",
-      "dest": "/api/webhook.js"
-    }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
-}
-{
-  "name": "your-project",
-  "version": "1.0.0",
-  "engines": {
-    "node": "20.x"
-  },
-  "scripts": {
-    "build": "next build",
-    "start": "next start"
   }
 }
