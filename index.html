@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Webhook Status</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        .status-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        .success { color: #25D366; }
+        .title {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        .info-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #25D366;
+        }
+        .webhook-url {
+            font-family: monospace;
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+        .timestamp {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="status-icon success">✅</div>
+        <h1 class="title">Webhook פעיל!</h1>
+        <p class="subtitle">ה-WhatsApp webhook שלך עובד בהצלחה</p>
+        
+        <div class="info-box">
+            <h3>מידע על ה-Webhook:</h3>
+            <p><strong>סטטוס:</strong> פעיל ומוכן לקבל הודעות</p>
+            <p><strong>פלטפורמה:</strong> Vercel</p>
+            <p><strong>שירות:</strong> GREEN-API</p>
+        </div>
+        
+        <div class="info-box">
+            <h3>כתובת ה-Webhook:</h3>
+            <div class="webhook-url" id="webhookUrl">
+                טוען...
+            </div>
+        </div>
+        
+        <div class="timestamp" id="timestamp">
+            טוען זמן...
+        </div>
+    </div>
+
+    <script>
+        // הצגת כתובת ה-webhook הנוכחית
+        document.getElementById('webhookUrl').textContent = 
+            window.location.origin + '/api/webhook';
+        
+        // הצגת זמן נוכחי
+        document.getElementById('timestamp').textContent = 
+            'עודכן: ' + new Date().toLocaleString('he-IL');
+        
+        // בדיקת סטטוס ה-webhook כל 30 שניות
+        setInterval(async () => {
+            try {
+                const response = await fetch('/api/webhook');
+                const data = await response.json();
+                if (data.status === 'success') {
+                    document.getElementById('timestamp').textContent = 
+                        'בדיקה אחרונה: ' + new Date().toLocaleString('he-IL') + ' - פעיל ✅';
+                }
+            } catch (error) {
+                document.getElementById('timestamp').textContent = 
+                    'בדיקה אחרונה: ' + new Date().toLocaleString('he-IL') + ' - שגיאה ❌';
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
