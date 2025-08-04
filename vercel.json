@@ -19,3 +19,14 @@
     "NODE_ENV": "production"
   }
 }
+{
+  "name": "your-project",
+  "version": "1.0.0",
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "build": "next build",
+    "start": "next start"
+  }
+}
